@@ -1,5 +1,6 @@
 import 'package:chat_application/screens/chat_screen.dart';
 import 'package:chat_application/services/auth/auth_service.dart';
+import 'package:chat_application/shared/loading_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.purple.shade300,
         title: const Text("Home Page"),
         actions: [
           IconButton(onPressed: signOut, icon: const Icon(Icons.logout))
@@ -41,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const Text("error");
           }
           if (snapShot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading....");
+            return const LoadingWidget();
           }
           return ListView(
             children: snapShot.data!.docs

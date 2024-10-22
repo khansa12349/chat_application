@@ -2,6 +2,7 @@ import 'package:chat_application/chat/chat_service.dart';
 import 'package:chat_application/shared/chat_bubble.dart';
 
 import 'package:chat_application/shared/custom_text_field.dart';
+import 'package:chat_application/shared/loading_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.purple.shade300,
         title: Text(widget.receiverUserEmail),
       ),
       body: Column(
@@ -62,7 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
           return Text("Error: ${snapShot.error.toString()}");
         }
         if (snapShot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading...");
+          return const LoadingWidget();
         }
         return ListView(
           children: snapShot.data!.docs
@@ -123,11 +125,20 @@ class _ChatScreenState extends State<ChatScreen> {
               obscureText: false,
             ),
           ),
-          IconButton(
-            onPressed: sendMessage,
-            icon: const Icon(
-              Icons.arrow_upward,
-              size: 40,
+          const SizedBox(
+            width: 10,
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                color: Colors.purple.shade300,
+                borderRadius: BorderRadius.circular(36)),
+            child: IconButton(
+              onPressed: sendMessage,
+              icon: const Icon(
+                Icons.send,
+                size: 30,
+              ),
             ),
           ),
         ],
